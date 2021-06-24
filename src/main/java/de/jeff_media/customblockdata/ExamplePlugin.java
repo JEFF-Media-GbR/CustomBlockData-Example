@@ -28,14 +28,14 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void storeItemInBlock(PlayerInteractEvent event) {
+    public void storeItemInBlock(final PlayerInteractEvent event) {
         if (event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if (event.getHand() != EquipmentSlot.HAND) return;
 
-        ItemStack itemStack = event.getPlayer().getInventory().getItemInMainHand();
+        final ItemStack itemStack = event.getPlayer().getInventory().getItemInMainHand();
         if (itemStack.getAmount() == 0) return;
 
-        Block block = event.getClickedBlock();
+        final Block block = event.getClickedBlock();
         assert block != null;
 
         // Get the PersistentDataContainer of this block
@@ -58,11 +58,11 @@ public class ExamplePlugin extends JavaPlugin implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void dropStoredItemFromBlock(BlockBreakEvent event) {
-        PersistentDataContainer customBlockData = new CustomBlockData(event.getBlock(), this);
+    public void dropStoredItemFromBlock(final BlockBreakEvent event) {
+        final PersistentDataContainer customBlockData = new CustomBlockData(event.getBlock(), this);
         if (!customBlockData.has(storedItemKey, PersistentDataType.BYTE_ARRAY)) return;
         try {
-            ItemStack itemStack = ItemSerializer.fromBytes(customBlockData.get(storedItemKey, PersistentDataType.BYTE_ARRAY));
+            final ItemStack itemStack = ItemSerializer.fromBytes(customBlockData.get(storedItemKey, PersistentDataType.BYTE_ARRAY));
             event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), itemStack);
         } catch (IOException | ClassNotFoundException e) {
             Bukkit.getLogger().severe("Could not deserialize ItemStack from byte array:");
