@@ -1,0 +1,8 @@
+name: CustomBlockDataExample
+version: 1.0-SNAPSHOT
+main: de.jeff_media.customblockdata.ExamplePlugin
+authors:
+  - mfnalex
+  - JEFF Media GbR
+website: https://www.mfnalex.de
+api-version: "1.13"
